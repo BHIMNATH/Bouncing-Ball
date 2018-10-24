@@ -99,3 +99,11 @@ function createGame( )
 		replayButton = display.newText("REPLAY", display.contentCenterX, display.contentCenterY+100, native.systemFontBold, 20)
 		replayButton:addEventListener("tap",removeAll)
 	end
+	
+	function removeAll(event)
+		event.target:removeSelf()
+		display.remove(gameOverText)
+		createGame()
+	end
+end
+createTitleScreen()
