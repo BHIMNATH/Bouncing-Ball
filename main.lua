@@ -70,3 +70,32 @@ function createGame( )
 		tap_count = tap_count + 1
 		score.text = tap_count
 	end
+	local function onLocalCollision( self, event )
+		if (event.phase == "ended") then
+			tap_count = 0
+			if(hit_count == 1 ) then
+					gameOver()
+				else
+					hit_count = hit_count - 1
+			end
+			score.text = tap_count
+		end
+	end
+	soil.collision = onLocalCollision
+	soil:addEventListener( "collision" )
+
+	ball:addEventListener("tap",pushBallUp)
+	display.setStatusBar(display.DefaultStatusBar)
+
+
+	function gameOver()
+		-- Game Over : Remove all Texts 
+		gameOverText = display.newText("Game Over!!", display.contentCenterX, display.contentCenterY-50, native.systemFontBold, 50)
+		gameOverText:setFillColor(88,88,0)
+		display.remove(soil)
+		display.remove(ball)
+		display.remove(head)
+		display.remove(score)
+		replayButton = display.newText("REPLAY", display.contentCenterX, display.contentCenterY+100, native.systemFontBold, 20)
+		replayButton:addEventListener("tap",removeAll)
+	end
